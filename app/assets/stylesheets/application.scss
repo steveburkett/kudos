@@ -1,0 +1,79 @@
+@import "bootstrap";
+@import "pagination";
+
+.centered {
+  margin: 0 auto;
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.user-form {
+  padding: 2px;
+  background: white;
+  border-radius: 10px;
+  width: 35%
+}
+
+.lighter {
+  font-weight: lighter;
+}
+
+.chosen-user {
+  margin-bottom: 15px;
+}
+
+html body {
+  background-color:#f4f3ef;
+  font-family: "Exo 2", serif;
+  font-size: medium;
+}
+
+.title-row {
+  margin: 30px;
+}
+
+.kudos-row {
+  margin-top: 50px;
+  margin-bottom: 30px;
+  background: #eeeeee;
+  padding: 20px;
+}
+
+.kudo-section {
+  margin-top: 10px;
+  background: #eeeeee;
+  padding: 30px;
+  border-radius: 10px;
+  overflow: auto;
+}
+
+.users-row select {
+  margin: 5px;
+}
+
+.users-row {
+  margin-bottom: 20px;
+}
+
+.choose-person-label {
+   display: inline-block;
+}
+
+.given-kudos {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.kudo {
+  color: dimgray;
+  padding: 4px;
+  margin: 5px;
+}
+
+.new-kudo {
+  margin-top: 5px;
+  width: 100%;
+  margin-bottom: 5px;
+}

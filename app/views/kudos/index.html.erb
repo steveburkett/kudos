@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="row title-row">
+    <h1 class="centered-text">Get all your kudos here</h1>
+  </div>
+
+  <% if notice || alert %>
+    <div class="alert <%= notice ? "alert-info" : "" %><%= alert ? "alert-danger" : "" %> alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span></button>
+      <div >
+        <% if notice %>
+          <%= notice %>
+        <% elsif alert %>
+          <%= alert %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row users-row">
+    <div class="centered user-form">
+      <h3 class="centered-text">So, who are you?</h3>
+      <div>
+        <%= form_for :user, url: kudos_path, method: :get, class: 'user-form form-inline' do |f| %>
+          <% if @chosen_user.present? %>
+            <%= f.collection_select :id, @users, :id, :full_name, {:selected => @chosen_user.id} %>
+          <% else %>
+            <%= f.collection_select :id, @users, :id, :full_name%>
+          <% end %>
+          <%= f.submit "Choose", :class => 'btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <% if @chosen_user.present? %>
+
+      <div class="kudo-section">
+        <div class="users-row">
+          <h4 class="chosen-user"><span class="lighter">Hi there</span> <%= "#{@chosen_user.full_name}." %>
+            <% received = @chosen_user.kudos_received_count || 0 %>
+            <span class="lighter">You've received <%=received%> kudos</span>
+            <% if received > 0 %>
+              <span class="lighter">! Here they are ...</span>
+            <% end %>
+          </h4>
+          <% @received_kudos.each do |kudo| %>
+            <div class="kudo">'<%= kudo.text %>' (from <%= kudo.giver.full_name%>)</div>
+          <% end %>
+          <%= will_paginate @received_kudos%>
+        </div>
+      </div>
+
+      </br>
+
+      <div class="kudo-section">
+        <div class="users-row">
+          <h4>So <%=@chosen_user.first_name%>, who do you want to give a kudos to?</h4>
+          <%= form_for :kudo, url: kudos_path, class: 'user-form' do |f| %>
+            <%= f.label :text, "Choose a person to send a kudo", class: 'choose-person-label' %>
+            <%= f.collection_select :receiver_id, @receiving_users, :id, :full_name%>
+            <%= f.text_area :text, :class => 'new-kudo', :required => true %>
+            <%= f.hidden_field :giver_id, :value => @chosen_user.id %>
+            <%= f.submit "Send Kudo", :class => 'btn-primary pull-right' %>
+          <% end %>
+        </div>
+
+        <% given = @chosen_user.kudos_given_count || 0 %>
+        <div class="given-kudos">You've given <%=given%> kudos:</div>
+
+        <% @chosen_user.kudos_given.each do |kudo| %>
+          <div class="kudo">'<%= kudo.text %>' (to <%= kudo.receiver.full_name%>)</div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
