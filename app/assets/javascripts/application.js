@@ -15,12 +15,6 @@
 //= require bootstrap
 //= require_tree .
 
-$(function() {
-  $(".alert").bind('click', (function(_this) {
-    return function(ev) {
-      return $(".alert").fadeOut();
-    };
-  })(this));
-});
+
 
 

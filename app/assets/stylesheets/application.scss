@@ -1,5 +1,6 @@
 @import "bootstrap";
-@import "pagination";
+@import "devise";
+@import "will_paginate";
 
 .centered {
   margin: 0 auto;
@@ -7,6 +8,11 @@
 
 .centered-text {
   text-align: center;
+}
+
+.counter {
+  color: dimgray;
+  font-size: smaller;
 }
 
 .user-form {

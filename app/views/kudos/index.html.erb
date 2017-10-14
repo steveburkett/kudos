@@ -17,29 +17,13 @@
     </div>
   <% end %>
 
-  <div class="row users-row">
-    <div class="centered user-form">
-      <h3 class="centered-text">So, who are you?</h3>
-      <div>
-        <%= form_for :user, url: kudos_path, method: :get, class: 'user-form form-inline' do |f| %>
-          <% if @chosen_user.present? %>
-            <%= f.collection_select :id, @users, :id, :full_name, {:selected => @chosen_user.id} %>
-          <% else %>
-            <%= f.collection_select :id, @users, :id, :full_name%>
-          <% end %>
-          <%= f.submit "Choose", :class => 'btn-primary' %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
   <div class="row">
-    <% if @chosen_user.present? %>
+    <% if current_user.present? %>
 
       <div class="kudo-section">
         <div class="users-row">
-          <h4 class="chosen-user"><span class="lighter">Hi there</span> <%= "#{@chosen_user.full_name}." %>
-            <% received = @chosen_user.kudos_received_count || 0 %>
+          <h4 class="chosen-user"><span class="lighter">Hi there</span> <%= "#{current_user.full_name}." %>
+            <% received = current_user.kudos_received_count || 0 %>
             <span class="lighter">You've received <%=received%> kudos</span>
             <% if received > 0 %>
               <span class="lighter">! Here they are ...</span>
@@ -48,7 +32,7 @@
           <% @received_kudos.each do |kudo| %>
             <div class="kudo">'<%= kudo.text %>' (from <%= kudo.giver.full_name%>)</div>
           <% end %>
-          <%= will_paginate @received_kudos%>
+          <%= will_paginate @received_kudos, :param_name => 'received_page'%>
         </div>
       </div>
 
@@ -56,23 +40,40 @@
 
       <div class="kudo-section">
         <div class="users-row">
-          <h4>So <%=@chosen_user.first_name%>, who do you want to give a kudos to?</h4>
+          <h4>So <%=current_user.first_name%>, who do you want to give a kudos to?</h4>
           <%= form_for :kudo, url: kudos_path, class: 'user-form' do |f| %>
             <%= f.label :text, "Choose a person to send a kudo", class: 'choose-person-label' %>
             <%= f.collection_select :receiver_id, @receiving_users, :id, :full_name%>
-            <%= f.text_area :text, :class => 'new-kudo', :required => true %>
-            <%= f.hidden_field :giver_id, :value => @chosen_user.id %>
+            <%= f.text_area :text, :class => 'new-kudo', maxlength: '140', :required => true %>
+            <%= f.hidden_field :giver_id, :value => current_user.id %>
             <%= f.submit "Send Kudo", :class => 'btn-primary pull-right' %>
           <% end %>
         </div>
 
-        <% given = @chosen_user.kudos_given_count || 0 %>
+        <% given = current_user.kudos_given_count || 0 %>
         <div class="given-kudos">You've given <%=given%> kudos:</div>
 
-        <% @chosen_user.kudos_given.each do |kudo| %>
+        <% @given_kudos.each do |kudo| %>
           <div class="kudo">'<%= kudo.text %>' (to <%= kudo.receiver.full_name%>)</div>
         <% end %>
+        <%= will_paginate @given_kudos, :param_name => 'given_page'%>
       </div>
     <% end %>
   </div>
 </div>
+
+<script>
+  $(function() {
+    $(".alert").bind('click', (function(_this) {
+      return function(ev) {
+        return $(".alert").fadeOut();
+      };
+    })(this));
+  });
+
+  $(".new-kudo").characterCounter({
+    limit: '140',
+    counterFormat: '%1 characters left',
+    counterCssClass: 'counter'
+  });
+</script>

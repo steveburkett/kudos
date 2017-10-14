@@ -11,6 +11,7 @@ gem 'puma', '~> 3.7'
 gem 'sass-rails'
 
 gem 'will_paginate'
+gem 'devise'
 
 gem 'faker'
 gem 'jquery-rails'

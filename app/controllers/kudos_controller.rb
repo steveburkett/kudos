@@ -1,11 +1,9 @@
 class KudosController < ApplicationController
   # GET /kudos
   def index
-    if params["user"].present?
-      @chosen_user = User.where(id: params["user"]["id"]).take
-      @receiving_users = User.where.not(id: @chosen_user.id)
-      @received_kudos = @chosen_user.kudos_received.paginate(:page => params[:page], :per_page => 6)
-    end
+    @receiving_users = User.where.not(id: current_user.id)
+    @received_kudos = current_user.kudos_received.paginate(:page => params[:received_page], :per_page => 3)
+    @given_kudos = current_user.kudos_given.paginate(:page => params[:given_page], :per_page => 3)
 
     @users = User.all
     respond_to do |format|
@@ -23,6 +21,8 @@ class KudosController < ApplicationController
   def create
     @kudo = Kudo.create!(kudo_params)
     redirect_back fallback_location: root_path, notice: 'Kudo sent. Thanks!'
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to kudos_path, :alert => "Sorry...unable to give a kudo: #{e.message}"
   end
 
   # DELETE /kudos/:id
