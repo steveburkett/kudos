@@ -38,12 +38,12 @@ Kudo.create!({ giver: user3, receiver: user1, created_at: 4.months.ago, text: li
 Kudo.create!({ giver: user3, receiver: user4, created_at: 2.weeks.ago, text: limited_text(Faker::Matz.quote) })
 Kudo.create!({ giver: user3, receiver: user2, created_at: 6.days.ago, text: limited_text(Faker::RickAndMorty.quote) })
 Kudo.create!({ giver: user3, receiver: user2, created_at: 3.weeks.ago, text: limited_text(Faker::Overwatch.quote) })
-Kudo.create!({ giver: user3, receiver: user4, created_at: 1.weeks.ago, text: limited_text(Faker::Matz.quote) })
-Kudo.create!({ giver: user5, receiver: user2, text: limited_text(Faker::RickAndMorty.quote) })
-Kudo.create!({ giver: user5, receiver: user2, text: limited_text(Faker::Simpsons.quote) })
-Kudo.create!({ giver: user5, receiver: user2, text: limited_text(Faker::HarryPotter.quote) })
-Kudo.create!({ giver: user6, receiver: user2, text: limited_text(Faker::WorldOfWarcraft.quote) })
-Kudo.create!({ giver: user6, receiver: user5, text: limited_text(Faker::HarryPotter.quote) })
+Kudo.create!({ giver: user3, receiver: user4, created_at: 1.week.ago, text: limited_text(Faker::Matz.quote) })
+Kudo.create!({ giver: user5, receiver: user2, created_at: 3.weeks.ago, text: limited_text(Faker::RickAndMorty.quote) })
+Kudo.create!({ giver: user5, receiver: user2, created_at: 1.week.ago, text: limited_text(Faker::Simpsons.quote) })
+Kudo.create!({ giver: user5, receiver: user2, created_at: 1.day.ago, text: limited_text(Faker::HarryPotter.quote) })
+Kudo.create!({ giver: user6, receiver: user2, created_at: 1.weeks.ago, text: limited_text(Faker::WorldOfWarcraft.quote) })
+Kudo.create!({ giver: user6, receiver: user5, created_at: 1.day.ago, text: limited_text(Faker::HarryPotter.quote) })
 
 User.select(:email, :last_name, :first_name).each { |user|
   puts "User seeded: #{user.email} - #{user.full_name}"

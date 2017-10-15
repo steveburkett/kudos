@@ -1,0 +1,17 @@
+default: &default
+  adapter: postgresql
+  host: 127.0.0.1
+  pool: 5
+  timeout: 5000
+  username: steveburkett
+  password:
+
+development:
+  <<: *default
+  database: kudoserver_development
+
+test:
+  <<: *default
+  database: kudoserver_test
+
+# production values set by heroku upon deploy

@@ -17,5 +17,7 @@ FactoryGirl.define do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     username { Faker::GameOfThrones.dragon }
+    password { 'password'}
+    email { "#{first_name}.downcase_#{last_name.downcase}@faker.com" }
   end
 end
